@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2_使用JS创建虚拟DOM</title>
+    <script type="text/javascript" src="../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+</head>
+<body>
+
+    <div id="test"></div>
+
+    <!--
+        使用JS 创建虚拟dom时，必须使用React.createElement，存在嵌套结构时，也要依次创建，且script脚本必须放在 页面待操作脚本之后，dom是从上往下渲染的
+     -->
+    <script type="text/javascript">
+        const VDOM = React.createElement('h1',{id:'title'},'Hello,React')
+        ReactDOM.render(VDOM,document.getElementById("test"))
+    </script>
+
+</body>
+</html>

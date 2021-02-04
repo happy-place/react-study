@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1_使用JSX创建虚拟DOM</title>
+    <!--
+        使用JSX创建虚拟dom时，可以直接使用html标签，对于嵌套结构创建尤其高效
+        且代码无需出现在带操作标签之后
+    -->
+
+    <script type="text/javascript" src="../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+
+    <!-- 声明以下写的是jsx不是js,运行在浏览器之前需要使用babel翻译 -->
+    <script type="text/babel">
+    // 声明一个虚拟dom,不使用引号直接写html标签
+      const VDOM = (
+          <h1 id="title">
+              <span>Hello,React</span>
+          </h1>
+      )
+    // react中唯一接触到真实dom位置，是react的虚拟dom与浏览器真实dom的交接点
+      let testDiv = document.getElementById("test")
+    // 虚拟dom渲染到真实dom
+      ReactDOM.render(VDOM,testDiv) // 虚拟DOM,添加到页面位置
+    </script>
+
+</head>
+<body>
+  <div id="test"></div>
+</body>
+</html>
