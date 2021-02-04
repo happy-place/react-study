@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello_react</title>
+
+    <script type="text/javascript" src="../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+
+    <style type="text/css">
+        .aaa{
+            background-color: green;
+            font-size: 23px;
+        }
+    </style>
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    let className = "tItle"
+    let idName = "Title"
+    let cName='aaa'
+    const VDOM = (
+        <div>
+            <h1 className='aaa' id={idName.toLowerCase()}>Hello,React</h1>
+            <h1 className={cName} id={idName.toUpperCase()}>Hello,React</h1>
+            <h1 className={cName} id={idName.toUpperCase()}>
+                <span style={{color:'red',fontSize:'26px'}}>Hello,React</span>
+            </h1>
+            <input id="i1" placeholder="请输入"/>
+            <Good>haha</Good>
+        </div>
+    )
+    let testDiv = document.getElementById("test")
+    ReactDOM.render(VDOM, testDiv)
+
+    /**
+     * JSX语法规则
+     * 1.虚拟DOM不能使用引号；
+     * 2.虚拟DOM中写js代码需要使用 {},且{}外不能使用引号；
+     * 3.JSX标签的类名指定不要用class，而要用className，其值可直接赋字符串或通过{}引用变量；
+     * 4.内联样式通过style={{xx:'yy'}}形式定义，外部{}表明使用的是js代码，内部{}表明是js对象，css样式中'-'转驼峰；
+     * 5.只能有一个根标签，出现多个平行标签，需要使用div包裹器;
+     * 6.标签必须闭合;
+     * 7.标签首字母：
+     *      若小写开头：则自动转换为对应html标签
+     *      若大写开头，优先识别为React Component，查找不到，就报错。
+     */
+</script>
+
+</body>
+</html>
