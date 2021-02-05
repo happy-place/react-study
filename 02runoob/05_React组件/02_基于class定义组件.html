@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>02_基于class定义组件.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class Hello extends React.Component{
+            render(){
+                return (
+                    <div>
+                        <h1>Hello React</h1>
+                        <h1>{this.props.date.toLocaleTimeString()}</h1>
+                    </div>
+                )
+            }
+        }
+
+        function tick(){
+            ReactDOM.render(
+                <Hello date={new Date()}/>,
+                document.getElementById('test')
+            )
+        }
+
+        setInterval(tick,1000)
+
+       /**
+        * 所谓组件是指能够卸载JSX标签里的内容，此处的<Hello /> 就是基于class 定义的组件,通过this.props获取属性
+        */
+       debugger;
+    </script>
+</body>
+</html>

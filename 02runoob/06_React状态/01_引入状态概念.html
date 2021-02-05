@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01_引入状态概念.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class Clock extends React.Component{
+            constructor(props) {
+                super(props);
+                this.state = {date:new Date()}
+            }
+
+            render(){
+                return (
+                    <div>
+                        <h1>Hello React</h1>
+                        <h1>{this.state.date.toLocaleTimeString()}</h1>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Clock />,
+            document.getElementById('test')
+        )
+
+        /**
+         * React 将组件看成一个状态机，在与用户交互过程中通过实现不同状态，然后渲染到UI，以保持页面与数据的一致性。
+         * 此处变化的时间被封装在状态
+         */
+    </script>
+</body>
+</html>

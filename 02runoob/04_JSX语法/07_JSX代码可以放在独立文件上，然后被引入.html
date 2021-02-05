@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>07_JSX代码可以放在独立文件上，然后被引入.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <script type="text/babel" src="./hello.js"></script>
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        setInterval(
+            ()=>{tick(document.getElementById('test'))},
+            1000
+        )
+    </script>
+</body>
+</html>

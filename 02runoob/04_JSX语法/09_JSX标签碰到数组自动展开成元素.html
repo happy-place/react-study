@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>09_JSX标签碰到数组自动展开成元素.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+       let fruits = [
+           <h1>apple</h1>,
+           <h1>orange</h1>,
+           <h1>banana</h1>
+       ]
+       let VDOM = (
+           <div>
+               {fruits}
+           </div>
+       )
+       ReactDOM.render(VDOM,document.getElementById('test'))
+       /**
+        * 09_JSX标签碰到数组自动展开成元素.html
+        */
+       debugger;
+    </script>
+</body>
+</html>

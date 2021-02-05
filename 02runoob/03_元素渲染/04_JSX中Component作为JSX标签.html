@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>04_JSX中Component作为JSX标签.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        // 继承
+        class Clock extends React.Component {
+            render(){
+                let VDOM = (
+                    <div>
+                        <h1>Hello React</h1>
+                        <h1>{this.props.date.toLocaleTimeString()}</h1>
+                    </div>
+                )
+                return VDOM
+            }
+        }
+        function tick(){
+            ReactDOM.render( // DOM 渲染时，会顺便渲染组件
+                <Clock date={new Date}/>, // 函数作为标签
+                document.getElementById('test')
+            )
+        }
+        setInterval(tick,1000)
+        /**
+         * 定时器控制，每秒刷新一次时间
+         */
+    </script>
+</body>
+</html>

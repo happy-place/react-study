@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>06_标签元素自定义属性使用data-前缀.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <style>
+        .title{
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        let myId = 'aAa'
+        let VDOM = (
+            <div>
+                <h1 className='title'>
+                    <p data-id={myId} id={myId}>Time: {new Date().toLocaleTimeString()}</p>
+                </h1>
+            </div>
+        )
+        /*
+        * 06_标签元素自定义属性使用data-前缀.html
+        * */
+        ReactDOM.render(VDOM,document.getElementById('test'))
+        console.log(document.getElementById('aAa'))
+        console.log(document.getElementById('aAa').attributes.getNamedItem('data-id'))
+    </script>
+</body>
+</html>

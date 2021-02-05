@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>05_标签元素样式可以使用className统一设置，内联元素使用style设置.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <style>
+        .title{
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        let myId = 'aAa'
+        let VDOM = (
+            <div>
+                <h1 className='title' id={myId.toUpperCase()}>Time: {new Date().toLocaleTimeString()}</h1>
+                <h1 id={myId.toLowerCase()}>
+                    <span style={{color:'red',fontSize:'30px'}}>Time: {new Date().toLocaleTimeString()}</span>
+                </h1>
+            </div>
+        )
+        /*
+        * 05_标签元素样式可以使用className统一设置，内联元素使用style设置.html
+        * 内联元素 双花括号，外层表示是JS代码，内层表示是JS对象，内部使用驼峰命名
+        *
+        * */
+        ReactDOM.render(VDOM,document.getElementById('test'))
+    </script>
+</body>
+</html>

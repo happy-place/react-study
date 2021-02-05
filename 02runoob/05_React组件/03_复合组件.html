@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>03_复合组件.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        let myStyle={color:'bisque',fontSize:'25px'}
+        class Name extends React.Component {
+            render(){
+                return <h1 style={myStyle}>网站名称: {this.props.name}</h1>
+            }
+        }
+
+        class Url extends React.Component {
+            render(){
+                return <h1>网站地址: {this.props.url}</h1>
+            }
+        }
+
+        class NickName extends React.Component {
+            render(){
+                return <h1>网站昵称: {this.props.nickname}</h1>
+            }
+        }
+
+        // 组合拼接
+        function App(props){
+          return (
+            <div>
+                <Name name={props.name}/>
+                <Url url={props.url}/>
+                <NickName nickname={props.nickname}/>
+            </div>
+          )
+        }
+        ReactDOM.render(
+            <App name="菜鸟教程" url="https://www.runoob.com/" nickname="小菜鸟"/>,
+            document.getElementById('test')
+        )
+        /**
+         * 03_复合组件 多个小组件拼接成大组件，然后使用大组件
+         */
+    </script>
+</body>
+</html>

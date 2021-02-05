@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>02_使用钩子刷新状态.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class Clock extends React.Component{
+            constructor(props) {
+                super(props);
+                this.state = {date:new Date()}
+            }
+
+            componentDidMount(){
+                this.timerID = setInterval(
+                    ()=> this.tick(),
+                    1000
+                )
+            }
+
+            componentWillUnmount(){
+                clearInterval(this.timerID )
+            }
+
+            tick(){
+                this.setState({
+                    date: new Date()
+                })
+            }
+
+            render(){
+                return (
+                    <div>
+                        <h1>Hello React</h1>
+                        <h1>{this.state.date.toLocaleTimeString()}</h1>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Clock />,
+            document.getElementById('test')
+        )
+
+        /**
+         * 02_使用钩子刷新状态.html
+         *
+         *  render 实质数占坑，componentDidMount，componentWillUnmount 是生命周期函数，又称钩子函数，当DOM输出到页面时，调用componentDidMount注册定时器，
+         *  当定时器被替换是，会调用componentWillUnmount先注销上一个定时器，释放资源，然后重新注册新定时器。
+         *  tick() 负责被定时器触发，刷新状态
+         *
+         */
+    </script>
+</body>
+</html>
