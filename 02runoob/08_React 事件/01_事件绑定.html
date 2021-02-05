@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01_事件绑定.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class Toggle extends React.Component {
+            constructor(props) {
+                super(props);
+                this.handleClick = this.handleClick.bind(this); // 必须给事件回调函数绑定自身
+                this.state = { // 初始化时，可以直接赋值
+                    isToggleOn: true
+                }
+            }
+
+            handleClick(){
+                this.setState({ // 翻转状态
+                    isToggleOn: !this.state.isToggleOn
+                })
+            }
+            render(){
+                return (
+                    <button onClick={this.handleClick}> {/* 需要使用 this 调用*/}
+                        {this.state.isToggleOn?'ON':'OFF'}
+                    </button>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Toggle />,
+            document.getElementById('test')
+        )
+
+        /**
+         *
+         *
+         */
+    </script>
+</body>
+</html>

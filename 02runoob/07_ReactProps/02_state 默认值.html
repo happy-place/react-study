@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01_props与state各自用途.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class HelloMessage extends React.Component{
+            render(){
+                return <h1>{this.props.name}</h1>
+            }
+        }
+
+        // 设置默认值
+        HelloMessage.defaultProps = {
+            name: 'tom'
+        }
+
+        ReactDOM.render(
+            <div>
+                <HelloMessage />
+                <HelloMessage name='cat'/>
+            </div>,
+            document.getElementById('test')
+        )
+
+        /**
+         * 02_state 默认值.html
+         *
+         *  xx.defaultProps = json object 方式设置默认属性值
+         *
+         */
+    </script>
+</body>
+</html>

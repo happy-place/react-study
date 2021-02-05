@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01_props与state各自用途.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        function FormatTimeString(props){
+            return <h2>{props.date.toLocaleTimeString()}</h2>
+        }
+
+        class Clock extends React.Component{
+            constructor(props) {
+                super(props);
+                this.state = {date:new Date()}
+            }
+
+            componentDidMount(){
+                this.timerID = setInterval(
+                    ()=> this.tick(),
+                    1000
+                )
+            }
+
+            componentWillUnmount(){
+                clearInterval(this.timerID )
+            }
+
+            tick(){
+                this.setState({
+                    date: new Date()
+                })
+            }
+
+            render(){
+                return (
+                    <div>
+                        <h1>{this.props.title}</h1>
+                        {
+                            /**
+                             *   props 存储不可变信息
+                             */
+                        }
+                        <FormatTimeString date={this.state.date}/>
+                        {
+                            /**
+                             *   state 存储可变数据，方便与用户进行交互
+                             */
+                        }
+                    </div>
+                )
+            }
+        }
+
+        function App(){
+            return (
+                <div>
+                    <Clock title="T1"/>
+                    <Clock title="T2"/>
+                </div>
+            )
+        }
+
+        ReactDOM.render(
+            <App />,
+            document.getElementById('test')
+        )
+
+        /**
+         * 03_数据自顶向下流动.html
+         *
+         *  Clock 是顶，即拥有数据一方，FormatTimeString 是下，即接收数据一方，React中数据流动是单向的，即下面接收数据时，
+         *  不关心顶部数据是来源于自身属性、方法入参，还是手工输入的。
+         *  数据流向自顶向下，某组件接收的数据发生改变，只能影响其自身和其下游组件。
+         *  组件有状态和无状态之分，可以在有状态组件中定义无状态组件，也可以在无状态组件中定义有状态组件
+         *
+         */
+    </script>
+</body>
+</html>

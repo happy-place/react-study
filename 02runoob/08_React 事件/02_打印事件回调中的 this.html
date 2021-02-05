@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>02_打印事件回调中的 this.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class Toggle extends React.Component {
+            constructor(props) {
+                super(props);
+                this.logging = this.logging.bind(this); // 必须给事件回调函数绑定自身
+            }
+
+            logging(){
+                console.log(this)
+            }
+
+            render(){
+                return (
+                    <button onClick={this.logging}> {/* 需要使用 this 调用*/}
+                        点击我
+                    </button>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Toggle />,
+            document.getElementById('test')
+        )
+
+        /**
+         * 03_数据自顶向下流动.html
+         *
+         *  Clock 是顶，即拥有数据一方，FormatTimeString 是下，即接收数据一方，React中数据流动是单向的，即下面接收数据时，
+         *  不关心顶部数据是来源于自身属性、方法入参，还是手工输入的。
+         *  数据流向自顶向下，某组件接收的数据发生改变，只能影响其自身和其下游组件。
+         *  组件有状态和无状态之分，可以在有状态组件中定义无状态组件，也可以在无状态组件中定义有状态组件
+         *
+         */
+    </script>
+</body>
+</html>

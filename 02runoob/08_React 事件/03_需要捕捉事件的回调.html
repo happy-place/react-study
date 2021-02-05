@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>03_需要捕捉事件的回调.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class Toggle extends React.Component {
+            constructor(props) {
+                super(props);
+                this.logging = this.logging.bind(this); // 必须给事件回调函数绑定自身
+            }
+
+            logging(e){
+                console.log(e)
+            }
+
+            render(){
+                return (
+                    <button onClick={(e)=>this.logging(e)}> {/* 这种写法会在每次渲染后绑定不同函数，不推荐*/}
+                        点击我
+                    </button>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Toggle />,
+            document.getElementById('test')
+        )
+
+        /**
+         * 03_需要捕捉事件的回调.html
+         *
+         *  触发事件同时，传入事件明细
+         *
+         */
+    </script>
+</body>
+</html>

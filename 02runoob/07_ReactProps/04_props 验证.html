@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01_props与state各自用途.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <script type="text/javascript" src="../../js/prop-types.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class WebSite extends React.Component {
+            constructor(props) {
+                super(props);
+            }
+            render(){
+                return (
+                    <div>
+                        <Title title={this.props.title}/>
+                        <Url url={this.props.url}/>
+                    </div>
+                )
+            }
+        }
+
+        class Title extends React.Component {
+            constructor(props) {
+                super(props);
+            }
+            render(){
+                return <h1>{this.props.title}</h1>
+            }
+        }
+
+        // 验证属性类型，后台会警告，但页面正常渲染
+        Title.propTypes = {
+            title: PropTypes.string
+        }
+
+        class Url extends React.Component {
+            constructor(props) {
+                super(props);
+            }
+            render(){
+                return <a href={this.props.url}>{this.props.url}</a>
+            }
+        }
+
+        ReactDOM.render(
+            <WebSite url="https://www.runoob.com/" title={123} />,
+            document.getElementById('test')
+        )
+
+        /**
+         * 04_props 验证.html
+         *
+         *  父类通过 state 接收设置属性，子类首页 props 接收
+         *
+         */
+    </script>
+</body>
+</html>
