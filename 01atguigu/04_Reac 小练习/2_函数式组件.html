@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2_函数式组件.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    function MyComponent(){
+        console.log(this)// undefine
+        return <h2>Hello, React</h2>
+    }
+
+    ReactDOM.render(<MyComponent/>, document.getElementById('test'))
+
+    /**
+     * 函数式组件，是指就是一个繁华 JSX 标签的函数。
+     * 要求：1.函数名必须大写，否则 会直接按 html 标签翻译；
+     *      2.组件方式呈现函数，函数的调用由 react 操作；
+     *      3.由于JSX 标签会被babel 翻译为 ES5 代码，而且开启了严格模式，因此组件中 this 禁止指向 window，而是 undefine
+     *
+     */
+</script>
+
+</body>
+</html>

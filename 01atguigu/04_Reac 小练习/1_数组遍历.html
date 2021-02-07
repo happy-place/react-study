@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1_数组遍历.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+
+    <style type="text/css">
+        .aaa{
+            background-color: green;
+            font-size: 23px;
+        }
+    </style>
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    let arr = ['apple','orange','banana']
+
+    let VDOM = (
+        <div>
+            <ul>
+                {
+                    arr.map((e,i)=><li key={i}>{e}</li>)
+                }
+            </ul>
+        </div>
+    )
+    ReactDOM.render(VDOM, document.getElementById('test'))
+
+    /**
+     * 1_数组遍历.html
+     * JSX 中可以写 JS表达式，但不能写 JS 代码，js 表达式只有一个值,JS 代码有多行，不一定有返回值
+     */
+</script>
+
+</body>
+</html>
