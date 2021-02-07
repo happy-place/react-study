@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>02_父元素回调函数绑定子元素.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class Content extends React.Component{
+            render(){
+                return (
+                    <div>
+                        <input type='text' value={this.props.myData} onChange={this.props.myOnChange}/>
+                        <h4>{this.props.myData}</h4>
+                    </div>
+                )
+            }
+        }
+        class HelloMessage extends React.Component{
+            constructor(props) {
+                super(props);
+                this.state = {value:'hello react'}
+                this.handleChange = this.handleChange.bind(this);
+            }
+
+            handleChange(event){
+                // 事件中获取当前值
+                this.setState({
+                    value: event.target.value
+                })
+            }
+
+            render(){
+                let value = this.state.value;
+                return (
+                    <div>
+                        <Content myData={value} myOnChange={this.handleChange}/>
+                    </div>
+                )
+
+            }
+        }
+
+        ReactDOM.render(
+            <HelloMessage />,
+            document.getElementById('test')
+        )
+
+        /**
+         * 02_父元素回调函数绑定子元素.html
+         *
+         * HelloMessage 被透传给Content， 并绑定到其 onClick 动作上
+         *
+         *
+         */
+    </script>
+</body>
+</html>

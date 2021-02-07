@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>03_React 组件key是兄弟节点间唯一，非全局唯一.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+       function Blog(props){
+           const sidebar = (
+               <ul>
+                   {
+                       props.posts.map(post =>
+                           <li key={post.id}>
+                               {post.title}
+                           </li>
+                       )
+
+                   }
+               </ul>
+           );
+
+           const content = (
+               <ul>
+                   {
+                       props.posts.map(post =>
+                           <li key={post.id}>
+                               <h3>{post.title}</h3>
+                               <p>{post.content}</p>
+                           </li>
+                       )
+                   }
+               </ul>
+           );
+
+           return (
+                   <div>
+                           {sidebar}
+                           <hr/>
+                           {content}
+                   </div>
+            )
+
+       }
+
+       const posts = [
+           {id:1,title:'Hello World', content:'Welcome to learning React'},
+           {id:2,title:'Hello React', content:'You can instann react by npm'},
+       ]
+        ReactDOM.render(
+            <Blog posts={posts}/>,
+            document.getElementById('test')
+        )
+
+        /**
+         * 03_应该在何处声明key.html
+         * key 只要求兄弟节点唯一，不要求全局唯一
+         *
+         *
+         *
+         */
+    </script>
+</body>
+</html>

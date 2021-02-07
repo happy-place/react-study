@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>03_逻辑与控制条件渲染.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        function MailBox(props){
+            const unreadMessage = props.unreadMessage;
+            return <div>
+                <h1>Hello!</h1>
+                {
+                    unreadMessage.length > 1 && <h2>你有{unreadMessage.length} 条未读消息</h2>
+                }
+            </div>
+        }
+
+        const message=['apple','banana']
+        // const message= [];
+
+        ReactDOM.render(
+            <MailBox unreadMessage={message}/>,
+            document.getElementById('test')
+        )
+
+        /**
+         * 02_bool 条件存入state.html
+         * render()中给按钮绑定的 onClick 函数，透传给 props 的，并在 button 中再次进行绑定
+         *
+         */
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>06_阻止事件默认行为.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class Toggle extends React.Component {
+            constructor(props) {
+                super(props);
+            }
+
+            preventPop(e){
+               e.preventDefault()
+                console.log('事件默认行为被阻止')
+            }
+
+            render(){
+                return ( // 显示传递事件对象
+                    <a href="https://www.runoob.com/" onClick={this.preventPop.bind(this)}>
+                        https://www.runoob.com/
+                    </a>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Toggle />,
+            document.getElementById('test')
+        )
+
+        /**
+         * 06_阻止事件默认行为.html
+         * 阻止事件默认行为，不使用 return false，而是调用 e.preventDefault()
+         *
+         */
+    </script>
+</body>
+</html>

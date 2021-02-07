@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>04_事件对象显示传值.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class Toggle extends React.Component {
+            constructor(props) {
+                super(props);
+                this.deleteRow = this.deleteRow.bind(this); // 必须给事件回调函数绑定自身
+            }
+
+            deleteRow(id,e){
+                console.log(id);
+            }
+
+            render(){
+                return ( // 显示传递事件对象
+                    <button id='1' onClick={(e)=>this.deleteRow('1',e)}>
+                        Delete Row
+                    </button>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Toggle />,
+            document.getElementById('test')
+        )
+
+        /**
+         * 04_事件对象显示传值.html
+         * onClick 绑定的是一个 匿名函数，事件作为函数丶最后一个参数
+         * 直接调用回调函数时，显示传递事件对象，事件需要作为最后一个参数
+         *
+         */
+    </script>
+</body>
+</html>

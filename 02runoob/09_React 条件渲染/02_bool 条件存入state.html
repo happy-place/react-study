@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>02_bool 条件存入state.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class LoginControl extends React.Component{
+            constructor(props) {
+                super(props);
+                this.handleLoginClick = this.handleLoginClick.bind(this);
+                this.handleLogoutClick = this.handleLogoutClick.bind(this);
+                this.state = {isLoggedIn: false}
+            }
+
+            handleLoginClick(){
+                this.setState({
+                    isLoggedIn: true
+                })
+            }
+
+            handleLogoutClick(){
+                this.setState({
+                    isLoggedIn: false
+                })
+            }
+
+            render(){
+                const isLoggedIn = this.state.isLoggedIn;
+                let button = null;
+
+                if(isLoggedIn){
+                    button = <LogoutButton onClick={this.handleLogoutClick}/>
+                }else{
+                    button = <LoginButton onClick={this.handleLoginClick}/>
+                }
+                return <div>
+                    <Greeting isLoggedIn={isLoggedIn}/>
+                    {button}
+                </div>
+            }
+
+        }
+
+        function LoginButton(props){
+            return <button onClick={props.onClick}>
+                登录
+            </button>
+        }
+
+        function LogoutButton(props){
+            return <button onClick={props.onClick}>
+                退出
+            </button>
+        }
+
+        function UserGreeting(props){
+            return <h1>欢迎回来</h1>
+        }
+
+        function GuestGreeting(props){
+            return <h1>请先登录</h1>
+        }
+
+        function Greeting(props){
+            if(props.isLoggedIn){
+                return <UserGreeting/>
+            }else{
+                return <GuestGreeting/>
+            }
+        }
+
+        ReactDOM.render(
+            <LoginControl/>,
+            document.getElementById('test')
+        )
+
+        /**
+         * 02_bool 条件存入state.html
+         * render()中给按钮绑定的 onClick 函数，透传给 props 的，并在 button 中再次进行绑定
+         *
+         */
+    </script>
+</body>
+</html>

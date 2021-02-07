@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>06_子类中更新父类组件 state.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class Content extends React.Component{
+            render(){
+                return (
+                    <div>
+                        <button onClick={this.props.myHandleChange}>点击我</button>
+                        <h4>{this.props.myValue}</h4>
+                    </div>
+                )
+            }
+        }
+
+        class HelloMessage extends React.Component{
+            constructor(props) {
+                super(props);
+                this.state = {
+                    value: 'hello Runoob'
+                };
+                this.handleChange = this.handleChange.bind(this);
+            }
+            handleChange(event){
+                this.setState({
+                    value: '菜鸟教程'
+                });
+            }
+            render(){
+                return (
+                    <Content myHandleChange={this.handleChange} myValue={this.state.value}/>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <HelloMessage />,
+            document.getElementById('test')
+        )
+
+        /**
+         * 06_子类中更新父类组件 state.html
+         *
+         * 父组件中的回调函数传递给子类，并在子类中完成动作绑定
+         *
+         *
+         */
+    </script>
+</body>
+</html>

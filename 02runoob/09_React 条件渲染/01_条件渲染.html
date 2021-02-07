@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>06_阻止事件默认行为.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        function UserGreeter(props){
+            return <h1>欢迎回来</h1>
+        }
+
+        function GuestGreeter(props){
+            return <h1>请先登录</h1>
+        }
+
+        function Greeter(props){
+            if(props.isLogin){
+                return UserGreeter(props)
+            }else{
+                return GuestGreeter(props)
+            }
+        }
+
+        ReactDOM.render(
+            <Greeter isLogin={true}/>,
+            document.getElementById('test')
+        )
+
+        /**
+         * 01_条件渲染.html
+         * 根据 bool 条件判断渲染谁
+         *
+         */
+    </script>
+</body>
+</html>

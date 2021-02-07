@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>03_应该在何处声明key.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        function ListItem(props){
+            return <li>{props.value}</li> // 下面 <ListItem 标签中注册看 key ,因此这里不需要 key 了
+        }
+
+        function FruitList(props){
+            let fruitList = props.fruits.map((name,index) => <ListItem key={index} value={name}/>) // 每个 li 需要提供唯一 key
+            return <ul>
+                {fruitList}
+            </ul>
+        }
+
+        const fruits = ['apple','orange','banana']
+        ReactDOM.render(
+            <FruitList fruits={fruits}/>,
+            document.getElementById('test')
+        )
+
+        /**
+         * 03_应该在何处声明key.html
+         * <li>标签不要求唯一 Key,但 React 组件要求有唯一 key,因此 ListItem 的 key 设置在ListItem调用位置，而不是引用位置
+         *
+         *
+         *
+         */
+    </script>
+</body>
+</html>

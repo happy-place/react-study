@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>03_Select下拉选.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class FavorForm extends React.Component{
+            constructor(props) {
+                super(props);
+                this.state = {value: null}
+                this.handleChange = this.handleChange.bind(this);
+                this.handleSubmit = this.handleSubmit.bind(this);
+            }
+
+            handleChange(event){
+                this.setState({
+                    value: event.target.value
+                });
+            }
+
+            handleSubmit(event){
+                alert("You`re favor site is "+this.state.value)
+                event.preventDefault()
+            }
+
+            render(){
+                return (
+                    <form onSubmit={this.handleSubmit}>
+                        <label>
+                            选择你最喜欢的网站
+                            <select value={this.state.value} onChange={this.handleChange}>
+                                <option value='gg'>Google</option>
+                                <option value='rn'>Runoob</option>
+                                <option value='tb'>Taobao</option>
+                                <option value='fb'>Facebook</option>
+                            </select>
+                        </label>
+                        <input type="submit" value='提交'/>
+                    </form>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <FavorForm />,
+            document.getElementById('test')
+        )
+
+        /**
+         * 02_父元素回调函数绑定子元素.html
+         *
+         * HelloMessage 被透传给Content， 并绑定到其 onClick 动作上
+         *
+         *
+         */
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01_setState 修改状态.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class Count extends React.Component{
+            constructor(props) {
+                super(props);
+                this.state = {
+                    count: 0
+                }
+                this.handleClick = this.handleClick.bind(this)
+            }
+
+            handleClick(){
+                this.setState({
+                    count: this.state.count + 1
+                })
+            }
+
+            render(){
+                return <h2 onClick={this.handleClick}>点击计数：{this.state.count}</h2>
+            }
+        }
+
+        ReactDOM.render(
+            <Count/>,
+            document.getElementById('test')
+        )
+
+        /**
+         * 03_应该在何处声明key.html
+         * 1.除了 constructor 中可以通过 this.state = {k: v} 初始化赋值外，其余方法中，只能使用 this.setState 修改状态；
+         * 2.状态修改是将新kv 与老 kv 合并，然后批量渲染到页面
+         * 3.setState 会重新渲染组件
+         *
+         *
+         * 设置状态：setState
+         * 替换状态：replaceState
+         * 设置属性：setProps
+         * 替换属性：replaceProps
+         * 强制更新：forceUpdate
+         * 获取DOM节点：findDOMNode
+         * 判断组件挂载状态：isMounted
+         *
+         *  isMounted 的方法在 ES6 中已经废除。主要的原因是它经过实际使用与测试可能不足以检测组件是否挂载，尤其是对于有一些异步的程序情况，以及逻辑上造成混乱
+         *  使用以下逻辑替代
+         * componentDidMount() {
+         *      this.mounted = true;
+         *  }
+         *
+         *           componentWillUnmount() {
+         *      this.mounted = false;
+         *  }
+         *
+         */
+    </script>
+</body>
+</html>

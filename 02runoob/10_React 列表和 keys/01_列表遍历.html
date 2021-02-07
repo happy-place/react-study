@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01_列表遍历.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        const fruits = ['apple','orange','banana']
+        // map 自动创建 index
+        let fruitList = fruits.map((elem,index) => <li id={index} key={index}>{elem}</li>) // 每个 li 需要提供唯一 key
+
+        ReactDOM.render(
+            <ul>
+                {fruitList}
+            </ul>,
+            document.getElementById('test')
+        )
+
+        /**
+         * 01_列表遍历.html
+         * map对数组进行遍历，转换为 li
+         *
+         *
+         *
+         */
+    </script>
+</body>
+</html>

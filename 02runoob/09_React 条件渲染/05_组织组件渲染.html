@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>05_组织组件渲染.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+    <style>
+        .warn{
+            background-color: antiquewhite;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        function WarningBar(props){
+            let result = null;
+            if(props.warn){
+                result = <div className="warn">警告</div>
+            }
+            return result;
+        }
+
+        class Page extends React.Component{
+            constructor(props) {
+                super(props);
+                this.state = {showWarn: true}
+                this.handleToggleClick = this.handleToggleClick.bind(this)
+            }
+
+            handleToggleClick(){
+                this.setState({
+                    showWarn: !this.state.showWarn
+                })
+            }
+
+            render(){
+                return <div>
+                    <WarningBar warn={this.state.showWarn}/>
+                    <button onClick={this.handleToggleClick}>
+                        {this.state.showWarn?'显示':'隐藏'}
+                    </button>
+                </div>
+            }
+
+        }
+
+        ReactDOM.render(
+            <Page/>,
+            document.getElementById('test')
+        )
+
+        /**
+         * 05_组织组件渲染.html
+         * 组件的 render 方法返回 null 并不会影响该组件生命周期方法的回调。
+         * 例如，componentWillUpdate 和 componentDidUpdate 依然可以被调用
+         *
+         *
+         */
+    </script>
+</body>
+</html>

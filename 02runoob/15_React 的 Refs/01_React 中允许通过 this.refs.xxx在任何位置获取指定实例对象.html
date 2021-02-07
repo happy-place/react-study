@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01_React 中允许通过 refs在任何位置获取指定实例对象.html</title>
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+
+</head>
+<body>
+    <div id="test"></div>
+
+    <script type="text/babel">
+        class MyComponent extends React.Component{
+            constructor(props) {
+                super(props);
+                this.handleClick = this.handleClick.bind(this);
+            }
+            handleClick(){
+                this.refs.myInput.focus();
+            }
+            render(){
+                return (
+                    <div>
+                        <input type='text' ref='myInput'/>
+                        <input type='button' value='点击我获取焦点' onClick={this.handleClick}/>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <MyComponent />,
+            document.getElementById('test')
+        )
+
+        /**
+         * 06_子类中更新父类组件 state.html
+         *
+         * 父组件中的回调函数传递给子类，并在子类中完成动作绑定
+         *
+         *
+         */
+    </script>
+</body>
+</html>
