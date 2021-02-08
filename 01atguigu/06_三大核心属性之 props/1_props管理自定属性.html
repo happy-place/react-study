@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>7_干掉构造器初始化 state 精简写法.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    class Student extends React.Component {
+        render() {
+            // js 对象结构方式，获取变量
+            let {name,age,gender} = this.props;
+            return (
+                <ul>
+                    <li>{name}</li>
+                    <li>{age}</li>
+                    <li>{gender}</li>
+                </ul>
+            )
+        }
+    }
+
+    // 以 props 方式传入私有属性，完成赋值
+    ReactDOM.render(
+        <div>
+            <Student name='Tom' age={12} gender={'male'}/>
+            <Student name='Lucy' age={22} gender={'female'}/>
+            <Student name='Lily' age={23} gender={'female'}/>
+        </div>
+        ,
+        document.getElementById('test')
+    )
+
+    /**
+     * props 存储私有属性，且一旦赋值，不允许修改
+     */
+</script>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>6_函数组件中使用 props.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+    <script type="text/javascript" src="../../js/prop-types.js"></script> <!-- PropType 限制组件标签属性类型、必传、默认值-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+
+    function Student(props){
+        let {name,age,gender} = props;
+        return (
+            <div>
+                <ul>
+                    <li>{name}</li>
+                    <li>{age}</li>
+                    <li>{gender}</li>
+                </ul>
+            </div>
+        )
+    }
+
+    // 静态属性直接加载类上
+    Student.propTypes = {
+        name: PropTypes.string.isRequired, // name 必须是字符串类型，且是必传的
+        age: PropTypes.number,// age 必须是 数值类型
+        gender: PropTypes.string,
+        speak: PropTypes.func // speak 必须是函数类型
+    }
+
+    // 设置属性默认值
+    Student.defaultProps = {
+        age:18,
+        gender: 'male'
+    }
+
+    function doSpeak(){
+        console.log('hha')
+    }
+
+     const p3 = {name:'lily',gender:'male',speak:doSpeak}
+
+    ReactDOM.render(
+        <div>
+            <Student {...p3}/>
+        </div>
+        ,
+        document.getElementById('test')
+    )
+
+    /**
+     * 函数式组件，因为自身可以接收参数，所有可以使用 props，但不能使用 state 和 refs
+     * props 字段类型、必须行、默认值约束，以组件名.propTypes、组件名.defaultProps 方式使用
+     */
+</script>
+
+</body>
+</html>

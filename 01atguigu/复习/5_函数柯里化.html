@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>5_函数柯里化.html</title>
+</head>
+<body>
+    <script type="application/javascript">
+        // 函数柯里化：一个函数连续调用接收多个参数，最后一次性处理返回
+        function sum(a){
+            return (b)=>{
+                return (c) => {
+                    return a +b +c
+                }
+            }
+        }
+
+        let res = sum(1)(2)(3)
+        console.log(res)
+
+    </script>
+
+
+
+</body>
+</html>

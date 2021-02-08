@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4_初始化state.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<div>
+    <input type="button" id="btn1" value="按钮1"/>
+    <input type="button" id="btn2" value="按钮2"/>
+    <input type="button" id="btn3" onclick="callback()" value="按钮3"/>
+</div>
+
+<script type="application/javascript">
+    class Person {
+        constructor(name,age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        /**
+         * 类中方法默认开启了局部严格模式，即在方法作用域内开启严格模式，在非对象调用时禁止 this 指向对象自身
+         * 此时 this 指向 undefined。
+         */
+        study(){
+            console.log(this)
+        }
+    }
+    let p1 = new Person()
+    p1.study() // person 对象
+    s1 = p1.study
+    s1() // undefined
+
+    function speak1(){
+        // 函数内部未开启严格模式，此时 this 指向 window
+        console.log(this) // window
+    }
+
+    function speak2(){
+        'use strict' // 函数内部开启严格模式，禁止 this 指向 window，此时指向的是 undefined
+        console.log(this) // undefined
+    }
+    speak1()
+    speak2()
+
+    // 此处是给 speak2 绑定了一个 js 对象，因此开启严格模式后，this 指向该 js 对象
+    let s2 = speak2.bind({name:'tom'})
+    s2()
+
+</script>
+
+
+<script type="text/babel">
+    class Button extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = { // 初始化state
+                isOn: true
+            }
+            this.handleClick = this.handleClick.bind(this);
+        }
+
+        handleClick() {
+            this.setState(state => ({ // 修改state
+                isOn:!this.state.isOn
+            }))
+            // 等效与下面代码
+            this.setState({isOn:!this.state.isOn})
+        }
+
+        render() {
+            return (
+                <div>
+                    <input type='button' onClick={this.handleClick} value={this.state.isOn ? 'ON' : 'OFF'}/>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<Button/>, document.getElementById('test'))
+
+    /**
+     * 1_原生 js 事件绑定.html
+     * 要求：
+     *  React 事件绑定 推荐在标签中使用 onClick={this.回调函数}，切回调函数通常需要再构造器中 绑定 this
+     */
+</script>
+
+</body>
+</html>

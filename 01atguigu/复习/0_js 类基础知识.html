@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>0_js 类基础知识.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="application/javascript">
+    class Car{
+        static brand = 'Foot' // 静态属性直接加在类上面
+        wheel = 4; // 公共属性加载类实例上面
+
+        constructor(speed,color) { // 私有属性通过构造器初始化
+            this.speed = speed;
+            this.color = color;
+        }
+
+        run(){
+            console.log(`cat is running at ${this.speed}`)
+        }
+
+        fly = ()=>{ // 赋值语句 + 箭头函数，创建类实例方法
+            console.log(this)
+        }
+    }
+
+    let c1 = new Car(100,'yellow')
+    console.log(c1)
+    c1.run()
+
+</script>
+
+
+</body>
+</html>

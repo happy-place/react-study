@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>5_类中构造器作用.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+    <script type="text/javascript" src="../../js/prop-types.js"></script> <!-- PropType 限制组件标签属性类型、必传、默认值-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    class Student extends React.Component {
+        // 静态属性直接加载类上
+        static propTypes = {
+            name: PropTypes.string.isRequired, // name 必须是字符串类型，且是必传的
+            age: PropTypes.number,// age 必须是 数值类型
+            gender: PropTypes.string,
+            speak: PropTypes.func // speak 必须是函数类型
+        }
+
+        // 设置属性默认值
+        static defaultProps = {
+            age:18,
+            gender: 'male'
+        }
+
+        /**
+         * 类组件构造器通常可以不写，如果写的话，通常两个用途：
+         * 1.初始化 state ；=> 可以直接在类中定义成员属性
+         * 2.绑定回调函数；=> 可以用赋值语句 + 箭头函数代替
+         * 传入 构造器的 props ，一定要穿给 super，否则在构造器中调用 this.props 会报错
+         */
+        constructor(props) {
+            super(props);
+            this.state = {isOn: true} // 1.初始化 state ；
+            this.handleClick = this.handleClick.bind(this) // 2.绑定回调函数；
+        }
+
+        handleClick(){
+            this.setState({
+                isOn: !this.state.isOn
+            })
+        }
+
+        render() {
+            let {name,age,gender} = this.props;
+            // props 中的属性是只读属性，不能修改，否则要报错
+            // this.props.age = this.props.age + 1; // Cannot assign to read only property 'age' of object
+            return (
+                <div>
+                    <input type="button" onClick={this.handleClick} value={this.state.isOn?'ON':'OFF'}/>
+                    <ul>
+                        <li>{name}</li>
+                        <li>{age}</li>
+                        <li>{gender}</li>
+                    </ul>
+                </div>
+            )
+        }
+    }
+
+    function doSpeak(){
+        console.log('hha')
+    }
+
+     const p3 = {name:'lily',gender:'male',speak:doSpeak}
+
+    // 下面 {...p1} 中花括号表示写入的是 js 代码，内部已...形式完成标签属性批量绑定，要求 json 字段名称与标签属性名称完全一致
+    // 只在 babel 和 react 标签上使用
+    ReactDOM.render(
+        <div>
+            <Student {...p3}/>
+        </div>
+        ,
+        document.getElementById('test')
+    )
+
+    /**
+     * props 存储私有属性，且一旦赋值，不允许修改
+     */
+</script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2_回调形式 ref.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+    <script type="text/javascript" src="../../js/prop-types.js"></script> <!-- PropType 限制组件标签属性类型、必传、默认值-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    class Demo extends React.Component{
+        state = {
+            isOn: true
+        }
+
+        handleClick = ()=>{
+            alert(this.input1.value)
+        }
+
+        handleBlur = ()=>{
+            alert(this.input2.value)
+        }
+
+        handleSwitch = () => {
+            this.setState({
+                isOn: !this.state.isOn
+            })
+        }
+
+        bindRef = (c) => {
+            this.input2 = c
+            console.log('!',c)
+        }
+
+        render(){
+            return (
+                <div>
+                    <input ref={c=> {this.input1 = c;console.log('@',c)}} type='text' placeholder="输入内容点击左侧显示"/>&nbsp;
+                    <button onClick={this.handleClick}>输入内容点击左侧显示</button>&nbsp;
+                    <input ref={this.bindRef} type='text' onBlur={this.handleBlur} placeholder="失去焦点显示内容"/>&nbsp;
+                    <button onClick={this.handleSwitch}>{this.state.isOn?'ON':'OFF'}</button>&nbsp;
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <div>
+            <Demo/>
+        </div>
+        ,
+        document.getElementById('test')
+    )
+
+    /**
+     * 回调函数：自己定义的函数自己没有调用，但是被他人调用执行了。
+     *
+     * 组件在标签上 ref 执行一个 回调函数，可以是 绑定在 this 对象上函数 入 bindRef，也可以是内联函数(箭头函数) {c=>this.input1=c}
+     * 不管哪种形式，在初始化时，都会被调用一次，但内联函数会在每次状态修改(state中属性值修改)时，需要先声明函数，传入 null，调用一次，然后绑定出发，传入当前节点，再次调用一次，总共调用两次；
+     * 而如果绑定的是 this上已经存在的函数，就只会在初始化时调用一次，只会状态改变，重新渲染 都不会再次调用了
+     *
+     * 尽管掉用了两次，但对最终结果实质无影响，因此推荐使用 内联函数形式创建 ref
+     *
+     */
+</script>
+
+</body>
+</html>

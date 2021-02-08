@@ -14,15 +14,23 @@
 
 <script type="text/babel">
     class MyComponent extends React.Component {
-        constructor(props) {
+        constructor(props) { // 构造器只在创建对象时调用一次
             super(props);
             this.state = { // 初始化state
                 isOn: true
             }
+            /** 下面代码相当于重写实力对象上的 handleClick 方法，已解决 this 指向问题
+            * 如果没有下面方法，onClick 指向的回调函数，会首先在MyComponent 实例对象上查找handleClick方法，
+             * 如果没有继续从原型链（__proto__，即类对象）上查找，如果依旧没有就从父类 React.Component 原型上查找
+            */
             this.handleClick = this.handleClick.bind(this);
         }
 
-        handleClick() {
+        handleClick() { // 触发几次就调用几次
+            /**
+             * React 三大属性 state、props、refs，修改属性必须使用 this.setState({})
+             * this.setState() 此处是合并属性
+             */
             this.setState(state => ({ // 修改state
                 isOn:!this.state.isOn
             }))
@@ -30,7 +38,7 @@
             this.setState({isOn:!this.state.isOn})
         }
 
-        render() {
+        render() { // 1+n 初始化时调用一次，然后每次 state 修改，都会触发调用一次
             return <input type='button' onClick={this.handleClick} value={this.state.isOn ? 'ON' : 'OFF'}/>
         }
     }

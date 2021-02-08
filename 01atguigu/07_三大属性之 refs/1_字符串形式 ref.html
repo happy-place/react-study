@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1_字符串形式 ref.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+    <script type="text/javascript" src="../../js/prop-types.js"></script> <!-- PropType 限制组件标签属性类型、必传、默认值-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    class Demo extends React.Component{
+        // 原始 js 方式获取对象，然后弹出值
+        handleClick = ()=>{
+            let input1 = document.getElementById('input1')
+            console.log(input1)
+            alert(input1.value)
+        }
+
+        // 标签上使用 ref 绑定标识，回调函数中使用 this.refs.标识 获取渲染好的 DOM
+        handleBlur = ()=>{
+            let input2 = this.refs.input2;
+            console.log(input2)
+            alert(input2.value)
+        }
+
+        render(){
+            return (
+                <div>
+                    <input id='input1' type='text' placeholder="输入内容点击左侧显示"/>&nbsp;
+                    <button onClick={this.handleClick}>输入内容点击左侧显示</button>&nbsp;
+                    <input ref='input2' type='text' onBlur={this.handleBlur} placeholder="失去焦点显示内容"/>&nbsp;
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <div>
+            <Demo/>
+        </div>
+        ,
+        document.getElementById('test')
+    )
+
+    /**
+     * 1_字符串形式 ref.html
+     * 标签上以 ref = 唯一标识 形式，打上标记
+     * 回调函数中通过 this.refs.唯一标识 方式获取被标记的真实 DOM 节点
+     * 注：React 官方已经不推荐使用字符串形式 ref，因为存在效率问题，并且在以后版本中可能会移除字符串形式 ref。
+     * 推荐使用回调形式 ref 和 this.createRef()
+     */
+</script>
+
+</body>
+</html>

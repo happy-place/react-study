@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3_js展开运算符.html</title>
+</head>
+<body>
+    <script type="application/javascript">
+        // 直接取出数组元素
+        let arr1 = [1,2,3]
+        console.log(arr1)
+        console.log(...arr1)
+
+        // 合并多个数组
+        let arr2 = [4,5,6]
+        let arr3 = [...arr1,...arr2]
+        console.log(arr3)
+
+        // 可变参数
+        function sum(...nums){
+            return nums.reduce(((previousValue, currentValue) => previousValue+currentValue))
+        }
+        let res = sum(...arr1)
+        console.log(res)
+
+        let p1 = {name:'tim',age:21}
+        let p2 = p1 // 引用传递
+        let p3 = {...p1} // 复制对象
+        p1.age = 100
+        console.log(p2)
+        console.log(p3)
+
+    </script>
+
+
+
+</body>
+</html>

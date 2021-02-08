@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2_受控组件.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+    <script type="text/javascript" src="../../js/jquery.min.js"></script> <!-- PropType 限制组件标签属性类型、必传、默认值-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    class Login extends React.Component{
+        state = {
+            username: '',
+            password: ''
+        }
+
+        saveUsername = (event)=>{
+            this.setState({
+                username: event.target.value
+            })
+        }
+
+        savePassword = (event)=>{
+            this.setState({
+                password: event.target.value
+            })
+        }
+
+        handleSubmit = (event) => {
+            event.preventDefault();
+            let {username,password} = this.state;
+            alert(`用户名: ${username}, 密码：${password}`)
+        }
+
+        render(){
+            return (
+                <form action="http://www.baidu.com" onSubmit={this.handleSubmit}>
+                    用户名：<input type="text" onChange={this.saveUsername}/>
+                    密码：<input type="password" onChange={this.savePassword}/>
+                    <button>提交</button>
+                </form>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <div>
+            <Login/>
+        </div>
+        ,
+        document.getElementById('test')
+    )
+
+    /**
+     * 2_受控组件.html （类似与 VUE 的双向数据绑定）
+     * 凡是带有输入性质标签，通过 onChange 事件，注册回调，实时记录修改值，维护到 state 中，需要使用时，直接从 state 中取，而无需借助 ref 现取
+     * 注：受控组件效率比较高，推荐使用
+     */
+</script>
+
+</body>
+</html>

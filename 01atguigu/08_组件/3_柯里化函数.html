@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3_柯里化函数.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+    <script type="text/javascript" src="../../js/jquery.min.js"></script> <!-- PropType 限制组件标签属性类型、必传、默认值-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    class Login extends React.Component{
+        state = {
+            username: '',
+            password: ''
+        }
+
+        saveFormData = (dataType)=>{
+            // 此处就是 柯里化函数，多次接收参数，一次处理返回，适合适配参数个数不统一调用场景
+            return (event) =>{
+                this.setState({
+                    [dataType]: event.target.value
+                })
+            }
+        }
+
+        handleSubmit = (event) => {
+            event.preventDefault();
+            let {username,password} = this.state;
+            alert(`用户名: ${username}, 密码：${password}`)
+        }
+
+        render(){
+            return (
+                <form action="http://www.baidu.com" onSubmit={this.handleSubmit}>
+                    用户名：<input type="text" onChange={this.saveFormData('username')}/>
+                    密码：<input type="password" onChange={this.saveFormData('password')}/>
+                    <button>提交</button>
+                </form>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <div>
+            <Login/>
+        </div>
+        ,
+        document.getElementById('test')
+    )
+
+    /**
+     * 高阶函数：一个函数的入参或返回值其中有一个是另一个函数，则次函数为高阶函数；
+     * 示例： arr.map(map_func)、setInterval(func,100)、new Promise((success,fail)=>{})
+     *
+     * 函数柯里化：多次接收参数，一次处理返回结果，称为函数柯里化。
+     *  function sum(a){
+            return (b)=>{
+                return (c) => {
+                    return a +b +c
+                }
+            }
+        }
+
+     let res = sum(1)(2)(3)
+     console.log(res)
+     *
+     */
+</script>
+
+</body>
+</html>

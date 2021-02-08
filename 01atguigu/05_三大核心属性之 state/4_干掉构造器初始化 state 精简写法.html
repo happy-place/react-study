@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>7_干掉构造器初始化 state 精简写法.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="application/javascript">
+    class Car {
+        wheel = 4 // 公共属性，可以直接放在勒种定义，而不用定义在构造器内
+        run() {
+            console.log(this)
+        }
+    }
+    let p1 = new Car()
+    p1.run()
+    let p2 = new Car()
+    p2.run()
+</script>
+
+
+<script type="text/babel">
+    class Button extends React.Component {
+        state = {isOn: true} // 公共属性直接写在类中，构造器用来定义私有属性，因此此处可以省略构造器
+
+        /** 回调函数，采用 赋值语句 + 箭头函数方式
+         * 赋值语句 天然将 handleClick 绑定到实例对象上，而不是实例对象原型链上，解决onClick={this.handleClick}中 this.xx需求
+         * 箭头函数 中如果使用了自身为定义的内容时，会自动往外层查找，知道找到。此处箭头函数中使用了 this，但其自身并没有定义 this，因此想外层找都实力对象上的 this
+         */
+        handleClick = () => {
+            this.setState({isOn: !this.state.isOn})
+        }
+
+        render() {
+            return <input type='button' onClick={this.handleClick} value={this.state.isOn ? 'ON' : 'OFF'}/>
+        }
+    }
+
+    ReactDOM.render(<Button/>, document.getElementById('test'))
+
+    /**
+     * 1.state 称为状态机，React 中以kv 形式维护属性状态在 state 中；
+     * 2.state 需要初始化，初始化 代码放在构造器中，或直接放在类中定义；
+     * 3.state 修改状态时，不能直接使用赋值语句，需要借助 this.setState({})函数，传入需要修改的 js 对象，此修改是合并修改；
+     * 4.React类式组件中定义的方法通常都是作为回调函数使用，因此需要再构造器中通过 bing()绑定到实例对象上，或以赋值语句+箭头函数形式绑定到实例对象。
+     *
+     */
+</script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4_不要过度使用 ref.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+    <script type="text/javascript" src="../../js/prop-types.js"></script> <!-- PropType 限制组件标签属性类型、必传、默认值-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    class Demo extends React.Component{
+        state = {
+            isOn: true
+        }
+
+        // 创建 Ref 容器
+        input1 = React.createRef()
+
+        // 事件触发对象和需要操作对象不是同一个对象时，需要使用 ref 标记
+        handleClick = ()=>{
+            console.log(this.input1)
+            alert(this.input1.current.value)
+        }
+
+        // 事件触发对象和需要操作对象时同一个对象时，回调函数会直接传入事件本身，通过 event.target可以拿到触发对象
+        handleBlur = (event)=>{
+            console.log(event)
+            alert(event.target.value)
+        }
+
+        handleSwitch = () => {
+            this.setState({
+                isOn: !this.state.isOn
+            })
+        }
+
+        render(){
+            return (
+                <div>
+                    <input ref={this.input1} placeholder="输入内容点击左侧显示"/>&nbsp;
+                    <button onClick={this.handleClick}>输入内容点击左侧显示</button>&nbsp;
+                    <input onBlur={this.handleBlur} placeholder="失去焦点显示内容"/>&nbsp;
+                    <button onClick={this.handleSwitch}>{this.state.isOn?'ON':'OFF'}</button>&nbsp;
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <div>
+            <Demo/>
+        </div>
+        ,
+        document.getElementById('test')
+    )
+
+    /**
+     * ref 使用过多会影响性能，通常事件触发对象与操作对象不同时，可以使用 ref 标记对象；否则可以直接在回调函数中接收事件，进而拿到触发对象。
+     * React 事件特点：
+     * 1.全部都是重写的，而非原生 DOM 事件，为的是提升兼容性；
+     * 2.事件是通过事件委托方式进行处理的，即子元素事件都绑定在最外层父元素上，然后子元素通过冒泡形式触发，这样做可以提升效率
+     */
+</script>
+
+</body>
+</html>

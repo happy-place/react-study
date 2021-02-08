@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1_非受控组件.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+    <script type="text/javascript" src="../../js/jquery.min.js"></script> <!-- PropType 限制组件标签属性类型、必传、默认值-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    class Login extends React.Component{
+        handleSubmit = (event)=>{
+            event.preventDefault(); // 组织表单默认提交跳转行为
+            let {username,password} = this;
+            alert(`用户名：${username.value}, 密码：${password.value}`)
+        }
+
+        render(){
+            return (
+                <form action="http://www.baidu.com" onSubmit={this.handleSubmit}>
+                    用户名：<input type="text" ref={c=>this.username = c}/>
+                    密码：<input type="password" ref={c=>this.password = c}/>
+                    <button>提交</button>
+                </form>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <div>
+            <Login/>
+        </div>
+        ,
+        document.getElementById('test')
+    )
+
+    /**
+     * 1_非受控组件.html
+     * 事先通过 ref 标识目标，事件触发回调时，立刻通过 ref 定位目标，获取数据，然后使用。一句话现用现取，事先不记录数据。
+     * 注：需要通过 ref 标记目标，使用过多会影响效率
+     */
+</script>
+
+</body>
+</html>

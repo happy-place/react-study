@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4_初始化state.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<div>
+    <input type="button" id="btn1" value="按钮1"/>
+    <input type="button" id="btn2" value="按钮2"/>
+    <input type="button" id="btn3" onclick="callback()" value="按钮3"/>
+</div>
+
+<script type="application/javascript">
+    // 原生 js 事件绑定
+    let btn1 = document.getElementById('btn1')
+    btn1.addEventListener('click',()=>{
+        console.log('标题被点击了')
+    })
+
+    let btn2 = document.getElementById('btn2')
+    btn2.onclick = () => {
+        console.log('标题被点击了')
+    }
+
+    function callback(){
+        console.log('标题被点击了')
+    }
+
+</script>
+
+
+<script type="text/babel">
+    class Button extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = { // 初始化state
+                isOn: true
+            }
+            this.handleClick = this.handleClick.bind(this);
+        }
+
+        handleClick() {
+            this.setState(state => ({ // 修改state
+                isOn:!this.state.isOn
+            }))
+            // 等效与下面代码
+            this.setState({isOn:!this.state.isOn})
+        }
+
+        render() {
+            return (
+                <div>
+                    <input type='button' onClick={this.handleClick} value={this.state.isOn ? 'ON' : 'OFF'}/>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<Button/>, document.getElementById('test'))
+
+    /**
+     * 1_原生 js 事件绑定.html
+     * 要求：
+     *  React 事件绑定 推荐在标签中使用 onClick={this.回调函数}，切回调函数通常需要再构造器中 绑定 this
+     */
+</script>
+
+</body>
+</html>

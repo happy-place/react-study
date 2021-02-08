@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3_createRef 形式 ref.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+    <script type="text/javascript" src="../../js/prop-types.js"></script> <!-- PropType 限制组件标签属性类型、必传、默认值-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    class Demo extends React.Component{
+        state = {
+            isOn: true
+        }
+
+        // 创建 Ref 容器
+        input1 = React.createRef()
+        input2 = React.createRef()
+
+        handleClick = ()=>{
+            console.log(this.input1)
+            alert(this.input1.current.value)
+        }
+
+        handleBlur = ()=>{
+            console.log(this.input2)
+            alert(this.input2.current.value)
+        }
+
+        handleSwitch = () => {
+            this.setState({
+                isOn: !this.state.isOn
+            })
+        }
+
+        render(){
+            return (
+                <div>
+                    <input ref={this.input1} type='text' placeholder="输入内容点击左侧显示"/>&nbsp;
+                    <button onClick={this.handleClick}>输入内容点击左侧显示</button>&nbsp;
+                    <input ref={this.input2} type='text' onBlur={this.handleBlur} placeholder="失去焦点显示内容"/>&nbsp;
+                    <button onClick={this.handleSwitch}>{this.state.isOn?'ON':'OFF'}</button>&nbsp;
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <div>
+            <Demo/>
+        </div>
+        ,
+        document.getElementById('test')
+    )
+
+    /**
+     * 3_createRef 形式 ref.html
+     *  先创建好 ref 容器，并绑定到 this 对象上： input1 = React.createRef()
+     *  然后在标签中 ref 指向创建好的对象:  ref={this.input1}
+     *  即可在回调函数中通过 input1.current 方式获取 ref 指向真实 DOM 节点
+     *
+     *  官方推荐 React.createRef()方式创建 ref
+     */
+</script>
+
+</body>
+</html>
