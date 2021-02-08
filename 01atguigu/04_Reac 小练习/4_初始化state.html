@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4_初始化state.html</title>
+
+    <script type="text/javascript" src="../../js/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    class MyComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = { // 初始化state
+                isOn: true
+            }
+            this.handleClick = this.handleClick.bind(this);
+        }
+
+        handleClick() {
+            this.setState(state => ({ // 修改state
+                isOn:!this.state.isOn
+            }))
+            // 等效与下面代码
+            this.setState({isOn:!this.state.isOn})
+        }
+
+        render() {
+            return <input type='button' onClick={this.handleClick} value={this.state.isOn ? 'ON' : 'OFF'}/>
+        }
+    }
+
+    ReactDOM.render(<MyComponent/>, document.getElementById('test'))
+
+    /**
+     * 3_类式组件.html
+     * 要求：
+     *  1.必须继承 React.Component；
+     *  2.必须实现 render()方法，方法返回 JSX 标签;
+     *  3.外部一标签形式调用组件，由 react 创建组件实例对象，并控制实力对象调用 render()，render 中 this 指向的就是次实例对象
+     *
+     */
+</script>
+
+</body>
+</html>
