@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2_组件声明周期函数详解（旧）.html</title>
+
+    <script type="text/javascript" src="../../js/16.8.4/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/16.8.4/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/16.8.4/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+    <script type="text/javascript" src="../../js/16.8.4/jquery.min.js"></script> <!-- PropType 限制组件标签属性类型、必传、默认值-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    /**
+     * 1.挂载阶段 Reace.Component.render()
+     *      constructor
+     *      componentWillMount
+     *      render
+     *      componentDidMount 常用，通常在页面挂载完毕时做一些初始化事情，例如：开启定时器、发起网络请求、订阅消息等
+     * 2.更新阶段
+     *      父组件 render
+     *       componentWillReceiveProps
+     *       shouldComponentUpdate      <- setState
+     *       componentWillUpdate        <- forceUpdate
+     *       render 必须用
+     *       componentDidUpdate
+     * 3.卸载阶段  ReactDOM.umountComponentAtNode()
+     *      componentWillUnmount 常用，通常在页面卸载前做一些收尾工作，例如：关闭定时器、取消订阅
+     *
+     *
+     * */
+
+
+    class Sub extends React.Component{
+        // 创建实例时调用一次，主要用于初始化 state，绑定回调
+        constructor(props) {
+            super(props);
+            console.log(props)
+            this.state = {count:0}
+            console.log('Sub-constructor')
+        }
+
+        // 卸载容器时调用一次，此容器必须是 div
+        handleUnmount = () => {
+            // 删除容器，即必须是 div
+            ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+        }
+
+        // 点击按钮计数，并修改 state 引起页面刷新，触发几次就调用几次
+        handleCount = () => {
+            let {count} = this.state;
+            this.setState({
+                count: count +1
+            })
+            console.log('Sub-setState')
+        }
+
+        // 强制刷新 DOM ,无论 shouldComponentUpdate 返回 true 或 false,都会刷新
+        handleForceUpdate = () => {
+            this.forceUpdate()
+            console.log('Sub-forceUpdate')
+        }
+
+        // 组件将要刷新时调用，初始渲染调用一次，之后每次更新或强制刷新调用一次
+        componentWillMount(){
+            console.log('Sub-componentWillMount')
+        }
+
+        // 组件刷新后调用 （初始化调用一次，每次刷新完毕调用一次）
+        componentDidMount(){
+            console.log('Sub-componentDidMount')
+        }
+
+        // 组件将要卸载前调用
+        componentWillUnmount(){
+            console.log('Sub-componentWillUnmount')
+        }
+
+        // 父组件重新 render 时使用
+        // 子组件接收父组件更新 props 时调用，初始化时不调用，只在父组件传入的 props更新时调用
+        // 又被戏称为 componentWillReceiveNewProps
+        componentWillReceiveProps(props){
+            console.log('Sub-componentWillReceiveProps')
+            console.log(props)
+        }
+
+        // 初始化或 state 修改，获取父组件传入props 更新时调用，起到阀门作用
+        // 返回 true 时，继续后面更新 DOM 逻辑，否则则不刷新 DOM，在 componentWillMount之前调用。
+        shouldComponentUpdate(){
+            console.log('Sub-shouldComponentUpdate')
+            return true;
+        }
+
+        // state 或 父组件传入 props 更新时调用
+        componentWillUpdate(){
+            console.log('Sub-componentWillUpdate')
+        }
+
+        // state 或 props 更新完毕调用
+        componentDidUpdate(){
+            console.log('Sub-componentDidUpdate')
+        }
+
+        // 每次渲染 DOM 时调用
+        render(){
+            console.log('Sub-render')
+            return (
+                <div>
+                    {/*<h2>Super switch is {this.props.isOn?'ON':'OFF'}</h2>*/}
+                    <h2>This is child: {this.state.count}</h2>
+                    <button onClick={this.handleUnmount}>卸载组件</button>
+                    <button onClick={this.handleCount}>点击计数</button>
+                    <button onClick={this.handleForceUpdate}>强制刷新</button>
+                </div>
+            )
+        }
+    }
+
+    class Super extends React.Component{
+        state = {isOn:true}
+        handleSwitch = ()=>{
+            this.setState({isOn: !this.state.isOn})
+            console.log('Super-change state')
+        }
+        render(){
+            return (
+                <div>
+                    <h2>This is Super</h2>
+                    <button onClick={this.handleSwitch}>切换开关</button>
+                    <Sub/>
+                </div>
+            )
+        }
+    }
+
+
+    ReactDOM.render(
+        <div>
+            <Super/>
+        </div>
+        ,
+        document.getElementById('test')
+    )
+
+
+</script>
+
+</body>
+</html>

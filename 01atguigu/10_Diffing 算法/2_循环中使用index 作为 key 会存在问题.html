@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2_循环中使用index 作为 key 会存在问题.html</title>
+
+    <script type="text/javascript" src="../../js/16.8.4/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/16.8.4/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/16.8.4/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+    <script type="text/javascript" src="../../js/16.8.4/jquery.min.js"></script> <!-- PropType 限制组件标签属性类型、必传、默认值-->
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    /**
+     * 循环遍历时，使用数组 index 作为 key 会可能会出现问题
+     * 1.逆序添加、逆序删除时，顺序变更，导致 DOM 全部需要重新渲染，效率低；
+     * 2.如果存在输入类型 DOM，已经输入内容，可能因新增节点，导致错位，出现错误；
+     *
+     * 因此，通常需要后端给出明确唯一 id，使用 id 作为 key，既高效，有不会出错。
+     *
+     *
+     *
+     * */
+
+    class Demo extends React.Component {
+        state = {
+            students: [
+                {id:1,name:'tom',age:19},
+                {id:2,name:'tom2',age:20}
+            ]
+        }
+
+        handleAdd = () => {
+            let {students} = this.state;
+            let id = students.length+1;
+            let s = {id: id,name:'tom'+id,age:20}
+            this.setState({
+                students: [s,...students]
+            })
+        }
+
+        render(){
+            return (
+                <div>
+                    <button onClick={this.handleAdd}>添加</button>
+                    <h2>以 index 为 key </h2>
+                    <ul>
+                        {this.state.students.map((s,i)=><li key={i}><input type="text"/>&nbsp;ID: {s.id}, Name: {s.name}, Age: {s.age}</li>)}
+                    </ul>
+                    <br/>
+                    <h2>以 id 为 key </h2>
+                    <ul>
+                        {this.state.students.map((s,i)=><li key={s.id}><input type="text"/>&nbsp;ID: {s.id}, Name: {s.name}, Age: {s.age}</li>)}
+                    </ul>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <div>
+            <Demo/>
+        </div>
+        ,
+        document.getElementById('test')
+    )
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4_getSnapshotBeforeUpdte 案例.html</title>
+
+    <script type="text/javascript" src="../../js/17.0.1/react.development.js"></script> <!-- 对应react核心库，必须放在react-dom之前引入 -->
+    <script type="text/javascript" src="../../js/17.0.1/react-dom.development.js"></script> <!-- 对应 react dom,操作虚拟DOM必须使用 -->
+    <script type="text/javascript" src="../../js/17.0.1/babel.min.js"></script> <!-- 负责 es6转es5，组件拆分，虚拟dom渲染为真实dom jsx转js-->
+
+    <style>
+        .news{
+            width: 200px;
+            height: 150px;
+            overflow: auto;
+            background-color: skyblue;
+        }
+        .newsItem{
+            width: 200px;
+            height: 30px;
+        }
+    </style>
+
+</head>
+<body>
+<div id="test"></div>
+
+<script type="text/babel">
+    /**
+     * 需求说明：
+     * 1.每隔 1 秒钟，弹出一条新消息，位于首行
+     * 2.随着消息条数增长，当前视窗位置保持不变
+     *
+     * */
+    class News extends React.Component {
+        state = {news:[]}
+
+        componentDidMount(){
+            this.timer = setInterval(()=>{
+                this.setState({
+                    news: [`新闻`+(this.state.news.length+1),...this.state.news]
+                })
+            },1000)
+        }
+
+        componentWillUnmount(){
+            clearInterval(this.timer)
+        }
+
+        getSnapshotBeforeUpdate(prevProps,prevState){
+            return this.refs.news.scrollHeight
+        }
+
+        componentDidUpdate(prevProps,prevState,snapshotValue){
+            // 更新前后窗高相减，就是当前 top 需要停留位置
+            console.log(this.refs.news.scrollHeight - snapshotValue)
+            this.refs.news.scrollTop += this.refs.news.scrollHeight - snapshotValue
+        }
+
+        render(){
+            return (
+                <div className="news" ref={'news'}>
+                    {this.state.news.map((e,i) => <div key={i} className="newsItem">{e}</div>)}
+                </div>
+            )
+        }
+    }
+
+
+    ReactDOM.render(
+        <div>
+            <News/>
+        </div>
+        ,
+        document.getElementById('test')
+    )
+
+
+</script>
+
+</body>
+</html>
